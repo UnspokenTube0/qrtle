@@ -149,7 +149,7 @@
 
 
 <script>
-    const ot=0;
+    let ot="";
 
 const array =[
     {id:1,n:'Filtro de Aceite',c:1},
@@ -196,6 +196,12 @@ const array =[
         invokeXamarinFormsAction(texto);
     }
         function EnviarTexto(texto,id,ot) {
+            if(id==1){
+                
+            document.getElementById("bmain").style.display = "block";
+            document.getElementById("scanC").style.display = "none";
+            mostrarLista();
+            }
         window.location.href = "maui://message?data=" + texto+"|"+id+"|"+ot;
         invokeXamarinFormsAction(texto);
     }
@@ -203,7 +209,7 @@ const array =[
         function recibirTexto(ptipo, ptexto,id,ot) {
 
         if (ptipo == 'base64') {
-            guardarFoto(ptexto,id);
+            //guardarFoto(ptexto,id);
             actualizarImg(ptexto, "evidencia");
         }
 
@@ -221,6 +227,7 @@ const array =[
         if (id==1){
             //Validar QR Camion
             validarQRT(QR);
+            
         } else if(id==3){
             //Validar QR Insumo
             validarQRI(QR);
@@ -281,7 +288,7 @@ function initPage(){
     let url = document.location.search;
     let params = url.split("=");
     ot=params[1];
-    document.getElementById('OT').innerHTML = params[1];
+    document.getElementById('OT').innerHTML = ot;
     //Llamada api para recibir datos del OT
     document.getElementById("uni").innerHTML="TR-377";
 }
