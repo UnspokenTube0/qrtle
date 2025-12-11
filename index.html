@@ -109,7 +109,7 @@
                             const btn = document.createElement("button");
                             btn.classList.add("btn-circle");
                             const txt = document.createElement("p");
-                            txt.innerHTML=data[i].ot;
+                            txt.textContent=data[i].ot;
                             btn.appendChild(txt);
                             btn.onclick=window.location.href='./mecanico/OT.html?OT='+data[i].ot;
                             document.getElementById("listOt").appendChild(btn);
