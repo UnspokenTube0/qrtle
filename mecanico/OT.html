@@ -188,18 +188,6 @@ function OT() {
     }
 
 
-    function revisarQR(QRt){
-        const params = QRt.split("|");
-        
-        //Verificar TR con OT
-        if (params[0] == "TR-377"){
-             getDatos();
-        } else {
-            alert("TR no coincide con OT");
-        }
-
-    }
-
 
 async function validarQRT(QRt) {
     try {
