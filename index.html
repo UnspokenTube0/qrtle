@@ -86,26 +86,11 @@
 <body>
 
 <div class="container">
+<p>demo</p>
+<h1>Ordenes de Servicio</h1>
 
-<h1>Demo QR</h1>
+<div class="btn-grid" id="listOt">
 
-<div class="btn-grid">
-
-    <button class="btn-circle" onclick="EnviarTexto('activaCamara')">
-        <img src="https://www.svgrepo.com/show/535246/camera.svg">
-    </button>
-
-    <button class="btn-circle" onclick="EnviarTexto('seleccionaFoto')">
-        <img src="https://www.svgrepo.com/show/421826/set-picture-galery.svg">
-    </button>
-
-    <button class="btn-circle" onclick="EnviarTexto('activaScanner')">
-        <img src="https://www.svgrepo.com/show/379577/qr-code-scan.svg">
-    </button>
-
-    <button class="btn-circle" onclick="EnviarTexto('activaScanner')">
-        <img src="https://www.svgrepo.com/show/410183/qr.svg">
-    </button>
     
     <button class="btn-circle" onclick="window.location.href='./mecanico/OT.html?OT=81095'">
         OT
@@ -113,57 +98,33 @@
 
 </div>
 
-<br><br>
-
-<p><strong>Barcode:</strong></p>
-<p id="barcode"></p>
-
-<br><br>
-
-<p><strong>Imagen:</strong></p>
-<img id="evidencia" src="https://www.svgrepo.com/show/365648/placeholder-thin.svg">
-
-<br><br>
-<p><strong>Registro de Imágenes</strong></p>
-
-<div id="imgdata"></div>
-
-</div>
 
 <script>
+    async function getOTs(id){
+            try {
+                const res = await fetch(`https://api.unspokenone.com/OT`);
+                const data = await res.json();
+                    if(data.length >0){
+                        for (let i=0;i<data.length;i++){
+                            const btn = document.createElement("button");
+                            btn.onclick=window.location.href='./mecanico/OT.html?OT='+data[i].OT;
+                            const txt = document.createElement("p");
+                            txt.innerHTML=data[i].OT;
+                            btn.appendChild(txt);
+                            document.getElementById("listOt").appendChild(btn);
 
-    function actualizarImg(base64Str, id) {
-        let src = "data:image/png;base64," + base64Str;
-        document.getElementById(id).src = src;
+                        }
+                    }
+                
 
-        var img = new Image();
-        img.src = src;
-        img.style.maxWidth = "150px";
-        img.style.maxHeight = "150px";
-        img.style.margin = "10px";
-        img.style.borderRadius = "10px";
-        document.getElementById("imgdata").appendChild(img);
+            } catch (error) {
+                alert('No pude conectarme a la API');
+            }
     }
 
-    function EnviarTexto(texto) {
-        window.location.href = "maui://message?data=" + texto;
-        invokeXamarinFormsAction(texto);
-    }
-
-    function recibirTexto(ptipo, ptexto) {
-
-        if (ptipo == 'base64') {
-            actualizarImg(ptexto, "evidencia");
-        }
-
-        if (ptipo == 'mensaje') {
-            alert(ptexto);
-        }
-
-        if (ptipo == 'codigoescaneado') {
-            document.getElementById("barcode").innerHTML = ptexto;
-        }
-    }
+function initPage(){
+    getOTs(1);
+}
 
 </script>
 
