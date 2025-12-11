@@ -107,10 +107,11 @@
                     if(data.length >0){
                         for (let i=0;i<data.length;i++){
                             const btn = document.createElement("button");
-                            btn.onclick=window.location.href='./mecanico/OT.html?OT='+data[i].ot;
+                            btn.classList.add("btn-circle");
                             const txt = document.createElement("p");
                             txt.innerHTML=data[i].ot;
                             btn.appendChild(txt);
+                            btn.onclick=window.location.href='./mecanico/OT.html?OT='+data[i].ot;
                             document.getElementById("listOt").appendChild(btn);
 
                         }
