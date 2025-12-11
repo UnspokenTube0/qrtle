@@ -191,7 +191,10 @@ function OT() {
 
 async function validarQRT(QRt) {
     try {
-        const res = await fetch(`https://api.unspokenone.com/test`);
+        
+        const params = QRt.split("|");
+        
+        const res = await fetch(`https://api.unspokenone.com/test/`+params[0]);
         const data = await res.json();
              if(data.status=="ok"){
                 document.getElementById("btns").style.visibility = "visible";
