@@ -97,7 +97,7 @@
 </div>
 <br>
 
-<div class="btn-grid" id="btns" hidden>
+<div class="btn-grid" id="btns" style="visibility: hidden;">
 
     <button class="btn-circle" onclick="EnviarTexto('activaCamara')">
         <img src="https://www.svgrepo.com/show/535246/camera.svg">
@@ -209,7 +209,10 @@ function OT() {
         
         //Verificar TR con OT
         if (params[0] == "TR-377"){
-            getDatos();
+             var data = getDatos();
+             if(data.status=="ok"){
+                document.getElementById("btns").style.visibility = "visible";
+             }
         } else {
             alert("TR no coincide con OT");
         }
@@ -221,7 +224,9 @@ async function getDatos() {
     try {
         const res = await fetch(`https://api.unspokenone.com/test`);
         const data = await res.json();
-        alert(data[0]);
+        return data;
+        alert(data.status);
+
     } catch (error) {
         alert('No pude conectarme a la API');
     }
