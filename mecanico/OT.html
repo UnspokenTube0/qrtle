@@ -202,7 +202,7 @@ async function validarQRT(QRt) {
         const data = await res.json();
              if(data.status=="ok"){
                 document.getElementById("bmain").style.display = "block";
-                document.getElementById("btn-scan-camion").style.display = "none";
+                //document.getElementById("btn-scan-camion").style.display = "none";
              } else {
                 alert("Alerta: \n QR no valido");
              }
