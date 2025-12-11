@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 10px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        /* ⬇️ Botones redondos con sombra */
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .btn-circle {
+            width: 100%;
+            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            border: none;
+        }
+
+        .btn-circle img {
+            width: 80px;
+            height: 80px;
+        }
+
+        /* ⬇️ Imagen principal */
+        #evidencia {
+            width: 100%;
+            max-width: 350px;
+            max-height: 350px;
+            border-radius: 12px;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        #barcode {
+            font-size: 20px;
+            font-weight: bold;
+            color: #222;
+        }
+
+        /* ⬇️ Galería de imágenes */
+        #imgdata img {
+            width: 100%;
+            max-width: 150px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+
+        #imgdata {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Demo QR</h1>
+
+<div class="btn-grid">
+
+    <button class="btn-circle" onclick="EnviarTexto('activaCamara')">
+        <img src="https://www.svgrepo.com/show/535246/camera.svg">
+    </button>
+
+    <button class="btn-circle" onclick="EnviarTexto('seleccionaFoto')">
+        <img src="https://www.svgrepo.com/show/421826/set-picture-galery.svg">
+    </button>
+
+    <button class="btn-circle" onclick="EnviarTexto('activaScanner')">
+        <img src="https://www.svgrepo.com/show/379577/qr-code-scan.svg">
+    </button>
+
+    <button class="btn-circle" onclick="EnviarTexto('activaScanner')">
+        <img src="https://www.svgrepo.com/show/410183/qr.svg">
+    </button>
+    
+    <button class="btn-circle" onclick="window.location.href='./mecanico/OT.html?OT=81095'">
+        OT
+    </button>
+
+</div>
+
+<br><br>
+
+<p><strong>Barcode:</strong></p>
+<p id="barcode"></p>
+
+<br><br>
+
+<p><strong>Imagen:</strong></p>
+<img id="evidencia" src="https://www.svgrepo.com/show/365648/placeholder-thin.svg">
+
+<br><br>
+<p><strong>Registro de Imágenes</strong></p>
+
+<div id="imgdata"></div>
+
+</div>
+
+<script>
+
+    function actualizarImg(base64Str, id) {
+        let src = "data:image/png;base64," + base64Str;
+        document.getElementById(id).src = src;
+
+        var img = new Image();
+        img.src = src;
+        img.style.maxWidth = "150px";
+        img.style.maxHeight = "150px";
+        img.style.margin = "10px";
+        img.style.borderRadius = "10px";
+        document.getElementById("imgdata").appendChild(img);
+    }
+
+    function EnviarTexto(texto) {
+        window.location.href = "maui://message?data=" + texto;
+        invokeXamarinFormsAction(texto);
+    }
+
+    function recibirTexto(ptipo, ptexto) {
+
+        if (ptipo == 'base64') {
+            actualizarImg(ptexto, "evidencia");
+        }
+
+        if (ptipo == 'mensaje') {
+            alert(ptexto);
+        }
+
+        if (ptipo == 'codigoescaneado') {
+            document.getElementById("barcode").innerHTML = ptexto;
+        }
+    }
+
+</script>
+
+</body>
+</html>
+
+
+
+
