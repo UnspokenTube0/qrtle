@@ -91,7 +91,7 @@
 <br><br>
 <div class="btn-scan-camion">
     <h2> Escanear Tracto</h2>
-        <button class="btn-circle" onclick="EnviarTexto('activaScanner')">
+        <button class="btn-circle" onclick="vaidarQR();">
             <img src="https://www.svgrepo.com/show/379577/qr-code-scan.svg">
         </button>    
 </div>
@@ -148,11 +148,7 @@ function vaidarQR(){
         })
         .then(data => {
             
-            var resp = JSON.stringify(data, null, 2);
-            document.getElementById(OT).innerHTML=resp;
-            if(resp[status] == "ok"){
-                document.getElementById("btns").hidden=false;
-            }
+            outputElement.textContent = JSON.stringify(data, null, 2);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -183,10 +179,6 @@ function OT() {
         window.location.href = "maui://message?data=" + texto ;
         invokeXamarinFormsAction(texto);
     }
-        function EnviarTexto(texto,id) {
-        window.location.href = "maui://message?data=" + texto+"|"+id ;
-        invokeXamarinFormsAction(texto);
-    }
 
     function recibirTexto(ptipo, ptexto) {
 
@@ -209,7 +201,7 @@ function OT() {
         
         //Verificar TR con OT
         if (params[0] == "TR-377"){
-            vaidarQR();
+
         } else {
             alert("TR no coincide con OT");
         }
