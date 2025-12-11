@@ -242,14 +242,13 @@ function OT() {
 async function validarQRI(QRI) {
     try {
         
-        const params = QRt.split("|");
         
         const res = await fetch(`https://api.unspokenone.com/test/TR-377`);
         const data = await res.json();
         //Si el QR es valido y para este OT, se toma evidencia
              if(data.status=="ok"){
                 //Tomamos Evidencia
-                window.location.href = "maui://message?data=activaCamara|3";
+                window.location.href = "maui://message?data=activaCamara|3|"+ot;
                 invokeXamarinFormsAction(texto);
              } else {
                 alert("Alerta: \n QR no valido");
