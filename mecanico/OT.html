@@ -91,7 +91,7 @@
 <br><br>
 <div class="btn-scan-camion">
     <h2> Escanear Tracto</h2>
-        <button class="btn-circle" onclick="EnviarTexto('activaScanner')">
+        <button class="btn-circle" onclick="EnviarTexto('activaScanner',1)">
             <img src="https://www.svgrepo.com/show/379577/qr-code-scan.svg">
         </button>    
 </div>
@@ -179,6 +179,29 @@ function OT() {
             document.getElementById("barcode").innerHTML = ptexto;
         }
     }
+        function recibirTexto(ptipo, ptexto,id) {
+
+        if (ptipo == 'base64') {
+            actualizarImg(ptexto, "evidencia");
+        }
+
+        if (ptipo == 'mensaje') {
+            alert(ptexto);
+        }
+
+        if (ptipo == 'codigoescaneado') {
+            revisarQR(ptexto,id);
+            document.getElementById("barcode").innerHTML = ptexto;
+        }
+    }
+    
+    function revisarQR(QRt,id){
+        if (id==1){
+            validarQRT(QRt);
+        }
+        
+    }
+
 
     function revisarQR(QRt){
         const params = QRt.split("|");
@@ -193,11 +216,28 @@ function OT() {
     }
 
 
+async function validarQRT(QRt) {
+    try {
+        const res = await fetch(`https://api.unspokenone.com/test`);
+        const data = await res.json();
+             if(data.status=="ok"){
+                document.getElementById("btns").style.visibility = "visible";
+             } else {
+                alert("Alerta: \n QR no valido");
+             }
+        return data;
+        
+
+    } catch (error) {
+        alert('No pude conectarme a la API');
+    }
+}
+
+
 async function getDatos() {
     try {
         const res = await fetch(`https://api.unspokenone.com/test`);
         const data = await res.json();
-        alert(data.status);
              if(data.status=="ok"){
                 document.getElementById("btns").style.visibility = "visible";
              }
