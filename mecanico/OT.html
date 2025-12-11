@@ -185,11 +185,7 @@ function OT() {
         
         //Verificar TR con OT
         if (params[0] == "TR-377"){
-             var data = getDatos();
-             alert(data.status);
-             if(data.status=="ok"){
-                document.getElementById("btns").style.visibility = "visible";
-             }
+             getDatos();
         } else {
             alert("TR no coincide con OT");
         }
@@ -201,8 +197,12 @@ async function getDatos() {
     try {
         const res = await fetch(`https://api.unspokenone.com/test`);
         const data = await res.json();
-        return data;
         alert(data.status);
+             if(data.status=="ok"){
+                document.getElementById("btns").style.visibility = "visible";
+             }
+        return data;
+        
 
     } catch (error) {
         alert('No pude conectarme a la API');
