@@ -97,7 +97,9 @@
 </div>
 <br>
 
-<div class="btn-grid" id="btns" style="visibility: hidden;">
+
+<div  id="bmain" style="visibility: hidden;">
+<div class="btn-grid">
 
     <button class="btn-circle" onclick="EnviarTexto('activaCamara')">
         <img src="https://www.svgrepo.com/show/535246/camera.svg">
@@ -133,6 +135,8 @@
 <div id="imgdata"></div>
 
 </div>
+</div>
+
 
 <script>
 
@@ -197,7 +201,7 @@ async function validarQRT(QRt) {
         const res = await fetch(`https://api.unspokenone.com/test/`+params[0]);
         const data = await res.json();
              if(data.status=="ok"){
-                document.getElementById("btns").style.visibility = "visible";
+                document.getElementById("bmain").style.visibility = "visible";
              } else {
                 alert("Alerta: \n QR no valido");
              }
