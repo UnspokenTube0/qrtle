@@ -95,7 +95,7 @@
             <img src="https://www.svgrepo.com/show/379577/qr-code-scan.svg">
         </button>    
 </div>
-<br><br>
+<br>
 
 <div class="btn-grid" id="btns" hidden>
 
@@ -147,7 +147,9 @@ function vaidarQR(){
             return response.json();
         })
         .then(data => {
+            
             var resp = JSON.stringify(data, null, 2);
+            document.getElementById(OT).innerHTML=resp;
             if(resp[status] == "ok"){
                 document.getElementById("btns").hidden=false;
             }
@@ -207,7 +209,7 @@ function OT() {
         
         //Verificar TR con OT
         if (params[0] == "TR-377"){
-
+            vaidarQR();
         } else {
             alert("TR no coincide con OT");
         }
