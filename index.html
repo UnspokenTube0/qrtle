@@ -111,7 +111,9 @@
                             const list=document.createElement("li");
                             list.id=data[i].ot;
                             list.value=data[i].ot;
-                            list.onclick=window.location.href='./mecanico/OT.html?OT='+data[i].ot;
+                            list.onclick = function () {
+                                window.location.href = './mecanico/OT.html?OT=' + data[i].ot;
+                            };
                             document.getElementById("listOt").appendChild(list);
 
                         }
