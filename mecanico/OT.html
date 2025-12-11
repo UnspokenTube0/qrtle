@@ -87,7 +87,7 @@
 
 <div class="container">
 <h1>Orden de Servicio</h1>
-<p id="OT"> test </p>
+<p id="OT"> </p>
 <div>
     <h2>Unidad</h2>
     <h3 id="uni"></h3>
@@ -155,17 +155,7 @@ const array =[
     {id:1,n:'Filtro de Aceite',c:1},
     {id:2,n:'Filtro de Aire',c:1},
     {id:3,n:'Filtro de Combustible',c:1}
-]
-
-function OT() {
-    let url = document.location.search;
-    let params = url.split("=");
-    ot=params[1];
-    document.getElementById('OT').innerHTML = params[1];
-    //Llamada api para recibir datos del OT
-    document.getElementById("uni").innerHTML="TR-377";
-}
-
+];
         //<img src="https://www.svgrepo.com/show/379577/qr-code-scan.svg">
 
 
@@ -241,11 +231,8 @@ function OT() {
     
 async function validarQRI(QRI) {
     try {
-        
-        
         const res = await fetch(`https://api.unspokenone.com/test/TR-377`);
-        const data = await res.json();
-        await sleep(200);
+        const data = await res.json();  
         //Si el QR es valido y para este OT, se toma evidencia
              if(data.status=="ok"){
                 //Tomamos Evidencia
@@ -291,7 +278,12 @@ async function validarQRT(QRt) {
 
 
 function initPage(){
-    OT();
+    let url = document.location.search;
+    let params = url.split("=");
+    ot=params[1];
+    document.getElementById('OT').innerHTML = params[1];
+    //Llamada api para recibir datos del OT
+    document.getElementById("uni").innerHTML="TR-377";
 }
 
 
