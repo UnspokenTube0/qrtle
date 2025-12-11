@@ -88,10 +88,14 @@
 <div class="container">
 <h1>Orden de Servicio</h1>
 <p id="OT"> test </p>
+<div>
+    <h2>Unidad</h2>
+    <h3 id="uni"></h3>
+</div>
 <br><br>
-<div class="btn-scan-camion">
+<div class="btn-scan-camion" id="scanC">
     <h2> Escanear Tracto</h2>
-        <button class="btn-circle" onclick="EnviarTexto('activaScanner', 1)">
+        <button class="btn-circle" onclick="EnviarTexto('activaScanner', 1,0)">
             <img src="https://www.svgrepo.com/show/379577/qr-code-scan.svg">
         </button>    
 </div>
@@ -99,6 +103,12 @@
 
 
 <div  id="bmain" style="display: none;">
+
+    <div id="list">
+
+
+    </div>
+
 <div class="btn-grid">
 
     <button class="btn-circle" onclick="EnviarTexto('activaCamara')">
@@ -139,12 +149,44 @@
 
 
 <script>
+    const ot=0;
+
+const array =[
+    {id:1,n:'Filtro de Aceite',c:1},
+    {id:2,n:'Filtro de Aire',c:1},
+    {id:3,n:'Filtro de Combustible',c:1}
+]
 
 function OT() {
     let url = document.location.search;
     let params = url.split("=");
+    ot=params[1];
     document.getElementById('OT').innerHTML = params[1];
+    //Llamada api para recibir datos del OT
+    document.getElementById("uni").innerHTML="TR-377";
 }
+
+        //<img src="https://www.svgrepo.com/show/379577/qr-code-scan.svg">
+
+
+    function mostrarLista(){       
+        //Llamada api por la lista de items
+        
+        for(let i=0;i<array.length;i++){
+            const btn = document.createElement("button");
+            btn.classList.add("btn-circle");
+            const txt = document.createElement("a");
+            txt.textContent=array[i].n;
+            btn.appendChild(txt);
+            const img = document.createElement("img");
+            img.src="https://www.svgrepo.com/show/379577/qr-code-scan.svg";
+            btn.appendChild(img);
+            btn.onclick = function () {
+                EnviarTexto('activaScanner', 3,ot);
+                };
+            document.getElementById("list").appendChild(btn);
+        }
+    }
 
     function actualizarImg(base64Str, id) {
         let src = "data:image/png;base64," + base64Str;
@@ -163,14 +205,15 @@ function OT() {
         window.location.href = "maui://message?data=" + texto ;
         invokeXamarinFormsAction(texto);
     }
-        function EnviarTexto(texto,id) {
-        window.location.href = "maui://message?data=" + texto+"|"+id ;
+        function EnviarTexto(texto,id,ot) {
+        window.location.href = "maui://message?data=" + texto+"|"+id+"|"+ot;
         invokeXamarinFormsAction(texto);
     }
 
-        function recibirTexto(ptipo, ptexto,id) {
+        function recibirTexto(ptipo, ptexto,id,ot) {
 
         if (ptipo == 'base64') {
+            guardarFoto(ptexto,id);
             actualizarImg(ptexto, "evidencia");
         }
 
@@ -184,12 +227,41 @@ function OT() {
         }
     }
     
-    function revisarQR(QRt,id){
+    function revisarQR(QR,id){
         if (id==1){
-            validarQRT(QRt);
-        }
+            //Validar QR Camion
+            validarQRT(QR);
+        } else if(id==3){
+            //Validar QR Insumo
+            validarQRI(QR);
+        }   
 
     }
+
+    
+async function validarQRI(QRI) {
+    try {
+        
+        const params = QRt.split("|");
+        
+        const res = await fetch(`https://api.unspokenone.com/test/TR-377`);
+        const data = await res.json();
+        //Si el QR es valido y para este OT, se toma evidencia
+             if(data.status=="ok"){
+                //Tomamos Evidencia
+                window.location.href = "maui://message?data=activaCamara|3";
+                invokeXamarinFormsAction(texto);
+             } else {
+                alert("Alerta: \n QR no valido");
+             }
+        return data;
+        
+
+    } catch (error) {
+        alert('No pude conectarme a la API');
+    }
+}
+
 
 
 
@@ -201,8 +273,9 @@ async function validarQRT(QRt) {
         const res = await fetch(`https://api.unspokenone.com/test/`+params[0]);
         const data = await res.json();
              if(data.status=="ok"){
-                document.getElementById("bmain").style.display = "block";
-                //document.getElementById("btn-scan-camion").style.display = "none";
+            document.getElementById("bmain").style.display = "block";
+            document.getElementById("scanC").style.display = "none";
+            mostrarLista();
              } else {
                 alert("Alerta: \n QR no valido");
              }
