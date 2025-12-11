@@ -202,6 +202,7 @@ async function validarQRT(QRt) {
         const data = await res.json();
              if(data.status=="ok"){
                 document.getElementById("bmain").style.display = "block";
+                document.getElementById("btn-scan-camion").style.display = "none";
              } else {
                 alert("Alerta: \n QR no valido");
              }
@@ -214,20 +215,6 @@ async function validarQRT(QRt) {
 }
 
 
-async function getDatos() {
-    try {
-        const res = await fetch(`https://api.unspokenone.com/test`);
-        const data = await res.json();
-             if(data.status=="ok"){
-                document.getElementById("btns").style.visibility = "visible";
-             }
-        return data;
-        
-
-    } catch (error) {
-        alert('No pude conectarme a la API');
-    }
-}
 
 
 function initPage(){
