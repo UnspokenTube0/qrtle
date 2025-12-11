@@ -91,7 +91,7 @@
 <br><br>
 <div class="btn-scan-camion">
     <h2> Escanear Tracto</h2>
-        <button class="btn-circle" onclick="EnviarTexto('activaScanner',1)">
+        <button class="btn-circle" onclick="EnviarTexto('activaScanner', 1)">
             <img src="https://www.svgrepo.com/show/379577/qr-code-scan.svg">
         </button>    
 </div>
@@ -164,21 +164,6 @@ function OT() {
         invokeXamarinFormsAction(texto);
     }
 
-    function recibirTexto(ptipo, ptexto) {
-
-        if (ptipo == 'base64') {
-            actualizarImg(ptexto, "evidencia");
-        }
-
-        if (ptipo == 'mensaje') {
-            alert(ptexto);
-        }
-
-        if (ptipo == 'codigoescaneado') {
-            revisarQR(ptexto);
-            document.getElementById("barcode").innerHTML = ptexto;
-        }
-    }
         function recibirTexto(ptipo, ptexto,id) {
 
         if (ptipo == 'base64') {
@@ -199,7 +184,7 @@ function OT() {
         if (id==1){
             validarQRT(QRt);
         }
-        
+
     }
 
 
