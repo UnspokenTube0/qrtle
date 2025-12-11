@@ -89,10 +89,7 @@
 <p>demo</p>
 <h1>Ordenes de Servicio</h1>
 
-<div class="btn-grid">
-    <ul id="listOt">
-
-    </ul>
+<div class="btn-grid" id="listOt">
     
     <button class="btn-circle" onclick="window.location.href='./mecanico/OT.html?OT=81095'">
         OT
@@ -108,13 +105,15 @@
                 const data = await res.json();
                     if(data.length >0){
                         for (let i=0;i<data.length;i++){
-                            const list=document.createElement("li");
-                            list.id=data[i].ot;
-                            list.value=data[i].ot;
-                            list.onclick = function () {
+                            const btn = document.createElement("button");
+                            btn.classList.add("btn-circle");
+                            const txt = document.createElement("p");
+                            txt.textContent=data[i].ot;
+                            btn.appendChild(txt);
+                            btn.onclick = function () {
                                 window.location.href = './mecanico/OT.html?OT=' + data[i].ot;
                             };
-                            document.getElementById("listOt").appendChild(list);
+                            document.getElementById("listOt").appendChild(btn);
 
                         }
                     }
