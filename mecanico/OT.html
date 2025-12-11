@@ -136,30 +136,6 @@
 
 <script>
 
-const api="https://api.unspokenone.com"
-
-function vaidarQR(){
-    fetch(apiUrl+"/test")
-        .then(response => {
-            if (!response.ok) {
-            throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            
-            var resp = JSON.stringify(data, null, 2);
-            document.getElementById(OT).innerHTML=resp;
-            if(resp[status] == "ok"){
-                document.getElementById("btns").hidden=false;
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
-
-    
 function OT() {
     let url = document.location.search;
     let params = url.split("=");
@@ -210,6 +186,7 @@ function OT() {
         //Verificar TR con OT
         if (params[0] == "TR-377"){
              var data = getDatos();
+             alert(data.status);
              if(data.status=="ok"){
                 document.getElementById("btns").style.visibility = "visible";
              }
