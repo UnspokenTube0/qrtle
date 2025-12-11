@@ -245,6 +245,7 @@ async function validarQRI(QRI) {
         
         const res = await fetch(`https://api.unspokenone.com/test/TR-377`);
         const data = await res.json();
+        await sleep(200);
         //Si el QR es valido y para este OT, se toma evidencia
              if(data.status=="ok"){
                 //Tomamos Evidencia
