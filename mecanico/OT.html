@@ -95,8 +95,9 @@
             <img src="https://www.svgrepo.com/show/379577/qr-code-scan.svg">
         </button>    
 </div>
+<br><br>
 
-<div class="btn-grid">
+<div class="btn-grid" id="btns" hidden>
 
     <button class="btn-circle" onclick="EnviarTexto('activaCamara')">
         <img src="https://www.svgrepo.com/show/535246/camera.svg">
@@ -135,6 +136,26 @@
 
 <script>
 
+const api="https://api.unspokenone.com"
+
+function vaidarQR(){
+    fetch(apiUrl+"/test")
+        .then(response => {
+            if (!response.ok) {
+            throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            var resp = JSON.stringify(data, null, 2);
+            if(resp[status] == "ok"){
+                document.getElementById("btns").hidden=false;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
 
     
 function OT() {
@@ -145,8 +166,8 @@ function OT() {
 
     function actualizarImg(base64Str, id) {
         let src = "data:image/png;base64," + base64Str;
-        document.getElementById(id).src = src;
 
+        document.getElementById(id).src = src;
         var img = new Image();
         img.src = src;
         img.style.maxWidth = "150px";
@@ -192,6 +213,7 @@ function OT() {
         }
 
     }
+
 
 
 function initPage(){
