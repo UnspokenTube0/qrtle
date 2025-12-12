@@ -313,8 +313,7 @@ async function validarQRI(QRI) {
         //Si el QR es valido y para este OT, se toma evidencia
             if(data.status=="ok"){
                 //Tomamos Evidencia
-                window.location.href = "maui://message?data=activaCamara|3|"+ot;
-                invokeXamarinFormsAction(texto);
+                EnviarTexto("activaCamara",3,ot);
             } else {
                 alert("Alerta: \n QR no valido");
             }
